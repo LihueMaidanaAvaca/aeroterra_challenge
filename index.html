@@ -35,6 +35,8 @@
           basemap: "streets-night-vector",
         });
 
+        let vistaType = "3d";
+
         const view = new SceneView({
           container: "viewDiv",
           map: map,
@@ -47,14 +49,13 @@
             },
             tilt: 75,
           },
-          type: "3d",
         });
 
-        // const view_2d = new MapView({
+        // const view_simple = new MapView({
         //   map: map,
         //   center: [-118.805, 34.027], // Longitude, latitude
         //   zoom: 13, // Zoom level
-        //   container: "viewDiv" // Div element
+        //   container: "viewDiv", // Div element
         // });
 
         const basemapToggle = new BasemapToggle({
@@ -76,10 +77,25 @@
         botonVista.ATTRIBUTE_NODE = true;
         botonVista.innerHTML = "◧ Vista 3D";
         botonVista.addEventListener("click", function () {
-          if (view.type === "2d") {
-            view.type = "3d";
+          if (vistaType === "3d") {
+            view.container = "viewDiv";
+            view.center = [-118.805, 34.027];
+            botonVista.innerHTML = "◧ Vista 2D";
+            vistaType = "2d";
           } else {
-            view.type = "2d";
+            view.container = "viewDiv";
+            // view.type = "2d-flat";
+            view.camera = {
+              position: {
+                // 37°06′S 56°51′O
+                y: -37.11667, //Longitude
+                x: -56.83333, //Latitude
+                z: 2000, //Meters
+              },
+              tilt: 75,
+            };
+            botonVista.innerHTML = "◧ Vista 3D";
+            vistaType = "3d";
           }
         });
 
